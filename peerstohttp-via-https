@@ -1,0 +1,20 @@
+upstream peerstohttp {
+        server 127.0.0.1:8484;
+}
+
+
+#you can run on the port of your choice
+
+server {
+  listen 80;
+  server_name listing-test.cnyawscloud3.com;
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /path/to/fullchain.pem; # Recommend - managed by Certbot
+    ssl_certificate_key /path/to/privkey.pem; # Recommend - managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # Recommend - managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # Recommend - managed by Certbot
+  location / {
+        proxy_pass http://peerstohttp;
+    }
+}
